@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -16,7 +17,7 @@ func Middleware(ar repository.Account) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
-
+			fmt.Printf("ctx: %v\n", ctx)
 			// ヘッダーから Username を取り出すだけの超安易な認証
 			a := r.Header.Get("Authentication")
 			pair := strings.SplitN(a, " ", 2)
